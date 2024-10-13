@@ -1,13 +1,13 @@
 import { MusicEventHandler } from "@handlers/MusicEventHandler"
-import { Interpreter } from "@tryforge/forgescript"
 import { ForgeMusic } from "@structures/ForgeMusic"
-import { Events } from "distube"
+import { Interpreter } from "@tryforge/forgescript"
+import { GuildQueueEvent } from "discord-player"
 
 export default new MusicEventHandler({
-    name: Events.DEBUG,
-    description: "Music manager debugs.",
-    listener(text) {
-        const commands = this.getExtension(ForgeMusic).commands.get(Events.DEBUG)
+    name: GuildQueueEvent.Debug,
+    description: "Executed when the queue sends a debug info.",
+    async listener(queue, message) {
+        const commands = this.getExtension(ForgeMusic).commands.get(GuildQueueEvent.Debug)
         if (!commands) return;
 
         for (const command of commands) {
@@ -15,9 +15,7 @@ export default new MusicEventHandler({
                 obj: {},
                 client: this,
                 command,
-                environment: {
-                    debug: text
-                },
+                environment: { queue, message },
                 data: command.compiled.code
             })
         }

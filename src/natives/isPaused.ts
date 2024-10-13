@@ -1,15 +1,13 @@
-import { Arg, ArgType, NativeFunction } from "@tryforge/forgescript"
-import getInstance from "@functions/getInstance"
+import { ArgType, NativeFunction } from "@tryforge/forgescript"
+import getNode from "@utils/getNode"
 
 export default new NativeFunction({
     name: "$isPaused",
-    description: "Check whether current queue is paused.",
     version: "1.0.0",
-    unwrap: true,
+    description: "Check whether the music player is paused.",
+    unwrap: false,
     output: ArgType.Boolean,
-    async execute(ctx) {
-        const manager = getInstance(ctx.client)
-        
-        return this.success(manager.getQueue(ctx.guild).paused)
+    execute(ctx) {
+        return this.success(getNode(ctx.guild).isPaused())
     }
 })

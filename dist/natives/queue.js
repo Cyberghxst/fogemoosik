@@ -1,16 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PLACEHOLDER_PATTERN = void 0;
 const forgescript_1 = require("@tryforge/forgescript");
+const constants_1 = require("../utils/constants");
 const node_vm_1 = require("node:vm");
-const getInstance_1 = __importDefault(require("../functions/getInstance"));
-/**
- * Capture pattern for song placeholders.
- */
-exports.PLACEHOLDER_PATTERN = /\{[a-zA-Z0-9._]+(?:\.[a-zA-Z0-9._]+)*\}/g;
+const discord_player_1 = require("discord-player");
 exports.default = new forgescript_1.NativeFunction({
     name: "$queue",
     description: "Returns queue songs resolving the given text placeholders.",
@@ -25,14 +18,15 @@ exports.default = new forgescript_1.NativeFunction({
     ],
     output: forgescript_1.ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
-        const manager = (0, getInstance_1.default)(ctx.client);
-        const queue = manager.getQueue(ctx.guild);
-        text || (text = "{position} {song.name} | <@{song.user.id}>");
-        const results = queue.songs.slice(index ?? 0, limit ?? 10)
+        const player = (0, discord_player_1.useMainPlayer)();
+        const queue = player.queues.get(ctx.guild);
+        const tracks = queue.tracks.toArray();
+        text || (text = "{position} {track.title} | <@{track.requestedBy.username}>");
+        const results = tracks.slice(index ?? 0, limit ?? 10)
             .map((_, i) => text.replace(/\{position\}/g, String(i + 1)))
             .map((song, i) => {
-            const matches = song.match(exports.PLACEHOLDER_PATTERN) ?? [];
-            const context = (0, node_vm_1.createContext)({ song: queue.songs[i] });
+            const matches = song.match(constants_1.PLACEHOLDER_PATTERN) ?? [];
+            const context = (0, node_vm_1.createContext)({ track: tracks[i] });
             for (const match of matches) {
                 const placeholderValue = match.slice(1, -1);
                 const result = (0, node_vm_1.runInContext)(placeholderValue, context);

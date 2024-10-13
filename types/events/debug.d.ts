@@ -1,4 +1,3 @@
 import { MusicEventHandler } from "../classes/handlers/MusicEventHandler";
-import { Events } from "distube";
-declare const _default: MusicEventHandler<import("distube").DisTubeEvents, Events.DEBUG>;
+declare const _default: MusicEventHandler<import("../classes/handlers/MusicEventHandler").TypedGuildQueueEvents, "debug">;
 export default _default;

@@ -1,16 +1,13 @@
-import { Arg, ArgType, NativeFunction } from "@tryforge/forgescript"
-import getInstance from "@functions/getInstance"
+import { ArgType, NativeFunction } from "@tryforge/forgescript"
+import { useQueue } from "discord-player"
 
 export default new NativeFunction({
     name: "$queueLength",
-    description: "Returns the length of the music queue.",
     version: "1.0.0",
-    unwrap: true,
+    description: "Returns the length of the current guild queue.",
+    unwrap: false,
     output: ArgType.Number,
-    async execute(ctx) {
-        const manager = getInstance(ctx.client)
-        const queue = manager.getQueue(ctx.guild)
-        
-        return this.success(queue.songs.length)
+    execute(ctx) {
+        return this.success(useQueue(ctx.guild).tracks.size)
     }
 })

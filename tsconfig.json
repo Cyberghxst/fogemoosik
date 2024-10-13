@@ -11,7 +11,7 @@
         "module": "CommonJS",
         "target": "ES2020",
         "paths": {
-            "@functions/*": ["./src/functions/*"],
+            "@utils/*": ["./src/utils/*"],
             "@handlers/*": ["./src/classes/handlers/*"],
             "@managers/*": ["./src/classes/managers/*"],
             "@structures/*": ["./src/classes/structures/*"]

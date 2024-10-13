@@ -1,23 +1,21 @@
 import { MusicEventHandler } from "@handlers/MusicEventHandler"
-import { Interpreter } from "@tryforge/forgescript"
 import { ForgeMusic } from "@structures/ForgeMusic"
-import { Events } from "distube"
+import { Interpreter } from "@tryforge/forgescript"
+import { GuildQueueEvent } from "discord-player"
 
 export default new MusicEventHandler({
-    name: Events.DISCONNECT,
-    description: "Executed when a queue is disconnected.",
-    listener(queue) {
-        const commands = this.getExtension(ForgeMusic).commands.get(Events.DISCONNECT)
+    name: GuildQueueEvent.Disconnect,
+    description: "Executed when the bot is disconnected from the channel.",
+    async listener(queue) {
+        const commands = this.getExtension(ForgeMusic).commands.get(GuildQueueEvent.Disconnect)
         if (!commands) return;
 
         for (const command of commands) {
             Interpreter.run({
-                obj: queue.textChannel,
+                obj: {},
                 client: this,
                 command,
-                environment: {
-                    queue
-                },
+                environment: { queue },
                 data: command.compiled.code
             })
         }

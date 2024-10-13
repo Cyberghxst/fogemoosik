@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ForgeMusic = exports.Events = void 0;
+exports.getYoutubeiInstance = exports.YoutubeiExtractor = exports.GuildQueueEvent = exports.ForgeMusic = void 0;
+const discord_player_youtubei_1 = require("discord-player-youtubei");
+Object.defineProperty(exports, "YoutubeiExtractor", { enumerable: true, get: function () { return discord_player_youtubei_1.YoutubeiExtractor; } });
+Object.defineProperty(exports, "getYoutubeiInstance", { enumerable: true, get: function () { return discord_player_youtubei_1.getYoutubeiInstance; } });
 const ForgeMusic_1 = require("./classes/structures/ForgeMusic");
 Object.defineProperty(exports, "ForgeMusic", { enumerable: true, get: function () { return ForgeMusic_1.ForgeMusic; } });
-const distube_1 = require("distube");
-Object.defineProperty(exports, "Events", { enumerable: true, get: function () { return distube_1.Events; } });
+const discord_player_1 = require("discord-player");
+Object.defineProperty(exports, "GuildQueueEvent", { enumerable: true, get: function () { return discord_player_1.GuildQueueEvent; } });

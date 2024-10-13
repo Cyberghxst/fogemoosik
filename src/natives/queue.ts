@@ -1,11 +1,8 @@
 import { Arg, ArgType, NativeFunction } from "@tryforge/forgescript"
+import { PLACEHOLDER_PATTERN } from "@utils/constants"
 import { createContext, runInContext } from "node:vm"
-import getInstance from "@functions/getInstance"
+import { useMainPlayer } from "discord-player"
 
-/**
- * Capture pattern for song placeholders.
- */
-export const PLACEHOLDER_PATTERN = /\{[a-zA-Z0-9._]+(?:\.[a-zA-Z0-9._]+)*\}/g
 
 export default new NativeFunction({
     name: "$queue",
@@ -22,16 +19,17 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
-        const manager = getInstance(ctx.client)
-        const queue = manager.getQueue(ctx.guild)
+        const player = useMainPlayer()
+        const queue = player.queues.get(ctx.guild)
+        const tracks = queue.tracks.toArray()
 
-        text ||= "{position} {song.name} | <@{song.user.id}>"
+        text ||= "{position} {track.title} | <@{track.requestedBy.username}>"
 
-        const results = queue.songs.slice(index ?? 0, limit ?? 10)
+        const results = tracks.slice(index ?? 0, limit ?? 10)
         .map((_, i) => text.replace(/\{position\}/g, String(i + 1)))
         .map((song, i) => {
             const matches = song.match(PLACEHOLDER_PATTERN) ?? []
-            const context = createContext({ song: queue.songs[i] })
+            const context = createContext({ track: tracks[i] })
 
             for (const match of matches) {
                 const placeholderValue = match.slice(1, -1)

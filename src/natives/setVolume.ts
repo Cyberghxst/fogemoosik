@@ -1,24 +1,16 @@
 import { Arg, NativeFunction } from "@tryforge/forgescript"
-import getInstance from "@functions/getInstance"
+import getNode from "@utils/getNode"
 
 export default new NativeFunction({
     name: "$setVolume",
-    description: "Set the volume of the player.",
     version: "1.0.0",
+    description: "Set the volume of the music player.",
     brackets: true,
     unwrap: true,
-    args: [
-        Arg.requiredNumber("Amount", "Volume amount to be applied.")
-    ],
-    async execute(ctx, [amount]) {
-        const manager = getInstance(ctx.client)
-        if (!manager.voices.has(ctx.guild)) {
-            return this.customError("This guild does not have a voice connection!")
-        }
+    args: [Arg.requiredNumber("Amount", "The volume amount to be applied.")],
+    execute(ctx, [amount]) {
+        getNode(ctx.guild).setVolume(amount)
 
-        const connection = manager.voices.get(ctx.guild)
-        connection.volume = amount
-        
         return this.success()
     }
 })
