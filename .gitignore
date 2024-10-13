@@ -132,7 +132,7 @@ out
 # Custom
 .replit
 replit.nix
-__cache__
-__test__
+__dump__
+# __test__
 package-lock.json
 pnpm-lock.yaml
