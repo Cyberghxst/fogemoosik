@@ -28,8 +28,6 @@ export default new NativeFunction({
             ...connectOptions
         }
 
-        console.log(connectionOptionsUnion)
-
         let executed = true
         const result = await player.play(<VoiceBasedChannel>voiceChannel, query, {
             nodeOptions: connectionOptionsUnion
