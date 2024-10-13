@@ -1,5 +1,5 @@
 import { EventManager, ForgeClient, ForgeExtension, Logger } from "@tryforge/forgescript"
-import { GuildQueueEvent, Player, type PlayerInitOptions } from "discord-player"
+import { GuildNodeCreateOptions, GuildQueueEvent, Player, type PlayerInitOptions } from "discord-player"
 import { MusicCommandManager, handlerName } from "@managers/MusicCommandManager"
 import { GatewayIntentsString } from "discord.js"
 
@@ -21,6 +21,10 @@ interface ForgeMusicInitOptions extends PlayerInitOptions {
      * @returns {boolean | null}
      */
     extractorsLoadFilter?: (ext: (typeof knownExtractorKeys)[number]) => boolean | null
+    /**
+     * Options that are used when a guild node is created.
+     */
+    connectOptions?: Omit<GuildNodeCreateOptions<unknown>, "metadata">
 }
 
 /**
@@ -44,7 +48,6 @@ export class ForgeMusic extends ForgeExtension {
      * The required intents for this extension to work.
      */
     private requiredIntents: GatewayIntentsString[] = ["GuildVoiceStates"]
-    public lyrics
 
     /**
      * Creates an instance of the music extension.
@@ -100,6 +103,13 @@ export class ForgeMusic extends ForgeExtension {
      */
     public get nativesLocation() {
         return __dirname.replace(/classes\\structures/, "natives")
+    }
+
+    /**
+     * Returns the user-defined `on connect` options.
+     */
+    public get connectOptions() {
+        return this.options.connectOptions
     }
 
     /**

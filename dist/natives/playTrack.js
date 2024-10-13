@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const forgescript_1 = require("@tryforge/forgescript");
+const ForgeMusic_1 = require("../classes/structures/ForgeMusic");
 const discord_player_1 = require("discord-player");
 exports.default = new forgescript_1.NativeFunction({
     name: "$playTrack",
@@ -21,11 +22,15 @@ exports.default = new forgescript_1.NativeFunction({
     ],
     async execute(ctx, [voiceChannel, query]) {
         const player = (0, discord_player_1.useMainPlayer)();
+        const connectOptions = ctx.getExtension(ForgeMusic_1.ForgeMusic).connectOptions ?? {};
+        const connectionOptionsUnion = {
+            metadata: { text: ctx.channel },
+            ...connectOptions
+        };
+        console.log(connectionOptionsUnion);
         let executed = true;
         const result = await player.play(voiceChannel, query, {
-            nodeOptions: {
-                metadata: { text: ctx.channel }
-            }
+            nodeOptions: connectionOptionsUnion
         }).catch((e) => {
             executed = false;
             return e;

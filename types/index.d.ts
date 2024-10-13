@@ -1,4 +1,4 @@
 import { YoutubeiExtractor, YoutubeiOptions, getYoutubeiInstance } from "discord-player-youtubei";
+import { GuildQueueEvent, QueueRepeatMode } from "discord-player";
 import { ForgeMusic } from "./classes/structures/ForgeMusic";
-import { GuildQueueEvent } from "discord-player";
-export { ForgeMusic, GuildQueueEvent, YoutubeiExtractor, YoutubeiOptions, getYoutubeiInstance };
+export { ForgeMusic, GuildQueueEvent, QueueRepeatMode, YoutubeiExtractor, YoutubeiOptions, getYoutubeiInstance };

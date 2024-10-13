@@ -3,6 +3,12 @@ const { ForgeClient } = require("@tryforge/forgescript")
 require("dotenv").config()
 
 const music = new ForgeMusic({
+    connectOptions: {
+        pauseOnEmpty: false,
+        leaveOnEmpty: false,
+        leaveOnEnd: false,
+        leaveOnStop: false
+    },
     events: [
         GuildQueueEvent.AudioTrackAdd,
         GuildQueueEvent.Connection,
@@ -68,8 +74,40 @@ client.commands.add({
         $#playTrack[$voiceID[$guildID;$authorID];$message]
     `
 },{
+    name: "stop",
+    type: "messageCreate",
+    code: `
+        $c[Checking if the message author is connected to a voice channel.]
+        $if[$voiceID[$guildID;$authorID]==;
+            $!sendMessage[$channelID;You must be connected to a voice channel.]
+            $stop
+        ]
+
+        $c[Checking if client and message author are in the same channel.]
+        $if[$and[$voiceID[$guildID;$authorID]!=;$voiceID[$guildID;$clientID]!=;$voiceID[$guildID;$authorID]!=$voiceID[$guildID;$clientID]];
+            $!sendMessage[$channelID;You must be connected to my voice channel.]
+            $stop
+        ]
+
+        $c[Stop the track only if is playing.]
+        $if[$isPlaying;$!stopTrack]
+    `
+},{
     type: "ready",
-    code: "$log[Client is ready;Available music providers: $getAvailableProviders]"
+    code: `
+        $c[Ready message.]
+        $log[Client is connected and ready to be used.]
+
+        $c[Log system resource usage.]
+        $setInterval[
+            $logger[Info;CURRENT_CPU_USAGE: $cpu]
+            $logger[Info;CURRENT_RAM_USAGE: $ram MB]
+        ;30s]
+    `
+},{
+    name: "ping",
+    type: "messageCreate",
+    code: "$!sendMessage[$channelID;Poing!]"
 })
 
 client.login()

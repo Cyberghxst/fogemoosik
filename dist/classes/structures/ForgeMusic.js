@@ -72,6 +72,12 @@ class ForgeMusic extends forgescript_1.ForgeExtension {
     get nativesLocation() {
         return __dirname.replace(/classes\\structures/, "natives");
     }
+    /**
+     * Returns the user-defined `on connect` options.
+     */
+    get connectOptions() {
+        return this.options.connectOptions;
+    }
 }
 exports.ForgeMusic = ForgeMusic;
 _ForgeMusic_instances = new WeakSet(), _ForgeMusic_hasInvalidEvents = function _ForgeMusic_hasInvalidEvents() {
