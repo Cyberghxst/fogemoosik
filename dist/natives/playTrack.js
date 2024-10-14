@@ -27,7 +27,6 @@ exports.default = new forgescript_1.NativeFunction({
             metadata: { text: ctx.channel },
             ...connectOptions
         };
-        console.log(connectionOptionsUnion);
         let executed = true;
         const result = await player.play(voiceChannel, query, {
             nodeOptions: connectionOptionsUnion
