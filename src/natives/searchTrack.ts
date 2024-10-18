@@ -2,6 +2,8 @@ import { SearchQueryType, useQueue, QueryType } from "discord-player"
 import { Arg, ArgType, NativeFunction } from "@tryforge/forgescript"
 import { PLACEHOLDER_PATTERN } from "@utils/constants"
 import { createContext, runInContext } from "node:vm"
+import { ForgeMusic } from "@structures/ForgeMusic"
+import hasQueue from "@utils/hasQueue"
 
 export default new NativeFunction({
     name: "$searchTrack",
@@ -25,7 +27,7 @@ export default new NativeFunction({
         }
     ],
     async execute(ctx, [query, text, engine, fallbackEngine, limit, addToPlayer, blockedExtractors]) {
-        const searchResult = await useQueue(ctx.guild).player.search(query, {
+        const searchResult = await ctx.client.getExtension(ForgeMusic).player.search(query, {
             searchEngine: engine as SearchQueryType | `ext:${string}`,
             fallbackSearchEngine: fallbackEngine,
             blockExtractors: blockedExtractors
@@ -50,7 +52,11 @@ export default new NativeFunction({
             return trackText
         })
 
-        if (addToPlayer) useQueue(ctx.guild).addTrack(tracks);
+        if (addToPlayer && hasQueue(ctx)) useQueue(ctx.guild).addTrack(tracks);
+        else if (addToPlayer && !hasQueue(ctx)) {
+            const queue = await ctx.client.getExtension(ForgeMusic).player.queues.create(ctx.guild)
+            queue.addTrack(tracks)
+        }
 
         return this.success(searchResult.tracks.length > 0 ? formattedTracks.join(",") : "")
     }

@@ -32,6 +32,7 @@ class ForgeMusic extends forgescript_1.ForgeExtension {
         this.requiredIntents = ["GuildVoiceStates"];
         if (__classPrivateFieldGet(this, _ForgeMusic_instances, "m", _ForgeMusic_hasInvalidEvents).call(this)) {
             forgescript_1.Logger.error("ForgeMusic found that you are using some of the following events:\n- VoiceStateUpdate\n- WillAutoPlay\n- WillPlayTrack\nthat aren't supported.");
+            process.exit();
         }
     }
     /**

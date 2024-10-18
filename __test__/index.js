@@ -22,6 +22,7 @@ const client = new ForgeClient({
         music
     ],
     events: [
+        'interactionCreate',
         "messageCreate",
         "ready"
     ],
@@ -36,6 +37,8 @@ const client = new ForgeClient({
 })
 
 music.player.extractors.register(YoutubeiExtractor, {})
+
+client.applicationCommands.load('./__test__/commands/application_commands')
 client.commands.load('./__test__/commands/client')
 music.commands.load('./__test__/commands/music')
 

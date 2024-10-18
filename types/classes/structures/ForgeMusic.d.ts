@@ -10,6 +10,10 @@ declare const knownExtractorKeys: readonly ["SpotifyExtractor", "AppleMusicExtra
  */
 interface ForgeMusicInitOptions extends PlayerInitOptions {
     /**
+     * Options that are used when a guild node is created.
+     */
+    connectOptions?: Omit<GuildNodeCreateOptions<unknown>, "metadata">;
+    /**
      * Array of event names the extension must listen to.
      */
     events?: GuildQueueEvent[];
@@ -18,10 +22,6 @@ interface ForgeMusicInitOptions extends PlayerInitOptions {
      * @returns {boolean | null}
      */
     extractorsLoadFilter?: (ext: (typeof knownExtractorKeys)[number]) => boolean | null;
-    /**
-     * Options that are used when a guild node is created.
-     */
-    connectOptions?: Omit<GuildNodeCreateOptions<unknown>, "metadata">;
 }
 /**
  * The entrypoint of the forge music system.

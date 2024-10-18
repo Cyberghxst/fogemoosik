@@ -3,7 +3,6 @@ import { Context } from "@tryforge/forgescript"
 
 export default function(ctx: Context) {
     const extension = ctx.client.getExtension(ForgeMusic)
-    const queue = extension.player.queues.get(ctx.guild)
 
-    return queue.node
+    return extension.player.queues.has(ctx.guild)
 }

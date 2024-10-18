@@ -1,9 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_player_1 = require("discord-player");
 const forgescript_1 = require("@tryforge/forgescript");
 const constants_1 = require("../utils/constants");
 const node_vm_1 = require("node:vm");
+const ForgeMusic_1 = require("../classes/structures/ForgeMusic");
+const hasQueue_1 = __importDefault(require("../utils/hasQueue"));
 exports.default = new forgescript_1.NativeFunction({
     name: "$searchTrack",
     version: "1.0.0",
@@ -26,7 +31,7 @@ exports.default = new forgescript_1.NativeFunction({
         }
     ],
     async execute(ctx, [query, text, engine, fallbackEngine, limit, addToPlayer, blockedExtractors]) {
-        const searchResult = await (0, discord_player_1.useQueue)(ctx.guild).player.search(query, {
+        const searchResult = await ctx.client.getExtension(ForgeMusic_1.ForgeMusic).player.search(query, {
             searchEngine: engine,
             fallbackSearchEngine: fallbackEngine,
             blockExtractors: blockedExtractors
@@ -46,8 +51,12 @@ exports.default = new forgescript_1.NativeFunction({
             }
             return trackText;
         });
-        if (addToPlayer)
+        if (addToPlayer && (0, hasQueue_1.default)(ctx))
             (0, discord_player_1.useQueue)(ctx.guild).addTrack(tracks);
+        else if (addToPlayer && !(0, hasQueue_1.default)(ctx)) {
+            const queue = await ctx.client.getExtension(ForgeMusic_1.ForgeMusic).player.queues.create(ctx.guild);
+            queue.addTrack(tracks);
+        }
         return this.success(searchResult.tracks.length > 0 ? formattedTracks.join(",") : "");
     }
 });

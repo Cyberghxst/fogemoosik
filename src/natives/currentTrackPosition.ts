@@ -9,6 +9,6 @@ export default new NativeFunction({
     unwrap: false,
     output: ArgType.Number,
     execute(ctx) {
-        return this.success(getNode(ctx.guild).getTrackPosition(useQueue(ctx.guild).currentTrack))
+        return this.success(getNode(ctx).getTrackPosition(useQueue(ctx.guild).currentTrack))
     }
 })
