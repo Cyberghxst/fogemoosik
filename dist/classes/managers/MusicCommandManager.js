@@ -10,9 +10,6 @@ exports.handlerName = "ForgeMusic";
  * The music command manager.
  */
 class MusicCommandManager extends forgescript_1.BaseCommandManager {
-    constructor() {
-        super(...arguments);
-        this.handlerName = exports.handlerName;
-    }
+    handlerName = exports.handlerName;
 }
 exports.MusicCommandManager = MusicCommandManager;
