@@ -34,7 +34,8 @@ exports.default = new forgescript_1.NativeFunction({
         const searchResult = await ctx.client.getExtension(ForgeMusic_1.ForgeMusic).player.search(query, {
             searchEngine: engine,
             fallbackSearchEngine: fallbackEngine,
-            blockExtractors: blockedExtractors
+            blockExtractors: blockedExtractors,
+            requestedBy: ctx.user
         });
         let tracks = searchResult.tracks;
         if (limit && tracks.length > limit)
