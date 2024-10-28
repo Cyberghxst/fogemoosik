@@ -23,9 +23,10 @@ An standard music library tailored for [ForgeScript](https://npmjs.com/package/@
 	2. [Commands](#commands)
 		1. [Event Data: Types and Interfaces](#event-data-types-and-interfaces)
 			1. [Example](#example)
-3. [Tips](#tips)
+3. [Advices](#advices)
+4. [Tips](#tips)
     1. [Adding support for YouTube](#adding-support-for-youtube)
-4. [Contributors](#contributors)
+5. [Contributors](#contributors)
 ----
 ## Installation
 In your project, navigate to your terminal and write the following command.
@@ -71,7 +72,8 @@ const music = new ForgeMusic({
     events: [
         GuildQueueEvent.PlayerFinish,
         GuildQueueEvent.PlayerStart,
-        GuildQueueEvent.PlayerError
+        GuildQueueEvent.PlayerError,
+        GuildQueueEvent.Error
     ]
 });
 ```
@@ -82,7 +84,8 @@ const music = new ForgeMusic({
     events: [
         GuildQueueEvent.PlayerFinish,
         GuildQueueEvent.PlayerStart,
-        GuildQueueEvent.PlayerError
+        GuildQueueEvent.PlayerError,
+        GuildQueueEvent.Error
     ]
 });
 
@@ -192,6 +195,10 @@ The following, is a list of event with its accessible properties.
     code: "$!sendMessage[$env[queue;metadata;text;id];A track started playing.]"
 }
 ```
+## Advices
+- You must add the following events to the extension in order to work properly.
+    - GuildQueueEvent.Error
+    - GuildQueueEvent.PlayerError
 ## Tips
 ### Adding Support for YouTube
 ForgeMusic by default provides support for streaming from YouTube, but the native method is not stable as intended.
