@@ -208,7 +208,9 @@ const { ForgeMusic, GuildQueueEvent, YoutubeiExtractor } = require("@tryforge/fo
 const music = new ForgeMusic({
     events: [
         GuildQueueEvent.AudioTrackAdd,
-        GuildQueueEvent.Connection
+        GuildQueueEvent.Connection,
+        GuildQueueEvent.PlayerError,
+        GuildQueueEvent.Error
     ],
     extractorsLoadFilter: (extractor) => extractor !== "YouTubeExtractor"
 });
