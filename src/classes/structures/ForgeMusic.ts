@@ -96,14 +96,14 @@ export class ForgeMusic extends ForgeExtension {
      * Returns the events location.
      */
     public get eventsLocation() {
-        return __dirname.replace(/classes\\structures/, "events")
+        return __dirname.replace(/classes(\\|\/)structures/, "events")
     }
 
     /**
      * Returns the native functions location.
      */
     public get nativesLocation() {
-        return __dirname.replace(/classes\\structures/, "natives")
+        return __dirname.replace(/classes(\\|\/)structures/, "natives")
     }
 
     /**

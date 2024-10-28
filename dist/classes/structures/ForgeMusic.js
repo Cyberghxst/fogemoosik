@@ -67,13 +67,13 @@ class ForgeMusic extends forgescript_1.ForgeExtension {
      * Returns the events location.
      */
     get eventsLocation() {
-        return __dirname.replace(/classes\\structures/, "events");
+        return __dirname.replace(/classes(\\|\/)structures/, "events");
     }
     /**
      * Returns the native functions location.
      */
     get nativesLocation() {
-        return __dirname.replace(/classes\\structures/, "natives");
+        return __dirname.replace(/classes(\\|\/)structures/, "natives");
     }
     /**
      * Returns the user-defined `on connect` options.
