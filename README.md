@@ -203,8 +203,14 @@ The following, is a list of event with its accessible properties.
 ### Adding Support for YouTube
 ForgeMusic by default provides support for streaming from YouTube, but the native method is not stable as intended.
 For this, you must omit the registration of the default **YouTube Extractor** by doing the following step.
+You must install `discord-player-youtubei` and then require `YoutubeiExtractor` from it.
+```bash
+npm install discord-player-youtubei
+```
+then, do the following step.
 ```js
-const { ForgeMusic, GuildQueueEvent, YoutubeiExtractor } = require("@tryforge/forge.music");
+const { ForgeMusic, GuildQueueEvent } = require("@tryforge/forge.music");
+const { YoutubeiExtractor } = require("discord-player-youtubei");
 const music = new ForgeMusic({
     events: [
         GuildQueueEvent.AudioTrackAdd,

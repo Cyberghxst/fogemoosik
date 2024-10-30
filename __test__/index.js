@@ -1,4 +1,5 @@
-const { ForgeMusic, GuildQueueEvent, YoutubeiExtractor } = require("../dist")
+const { YoutubeiExtractor } = require("discord-player-youtubei")
+const { ForgeMusic, GuildQueueEvent } = require("../dist")
 const { ForgeClient } = require("@tryforge/forgescript")
 require("dotenv").config()
 
