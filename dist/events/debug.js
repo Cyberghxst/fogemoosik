@@ -13,7 +13,7 @@ exports.default = new MusicEventHandler_1.MusicEventHandler({
             return;
         for (const command of commands) {
             forgescript_1.Interpreter.run({
-                obj: {},
+                obj: queue.metadata.text,
                 client: this,
                 command,
                 environment: { queue, message },

@@ -12,7 +12,9 @@ const music = new ForgeMusic({
     events: [
         GuildQueueEvent.AudioTrackAdd,
         GuildQueueEvent.Connection,
-        GuildQueueEvent.ConnectionDestroyed
+        GuildQueueEvent.ConnectionDestroyed,
+        GuildQueueEvent.PlayerError,
+        GuildQueueEvent.Error
     ],
     extractorsLoadFilter: (extractor) => extractor !== "YouTubeExtractor"
 })

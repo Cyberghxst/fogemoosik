@@ -12,7 +12,7 @@ export default new MusicEventHandler({
 
         for (const command of commands) {
             Interpreter.run({
-                obj: {},
+                obj: queue.metadata.text,
                 client: this,
                 command,
                 environment: { queue, tracks },

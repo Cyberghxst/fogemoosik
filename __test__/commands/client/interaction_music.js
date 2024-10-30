@@ -1,8 +1,8 @@
 module.exports = [{
-    allowedInteractionTypes: ['slash'],
+    allowedInteractionTypes: ['slashCommand'],
     type: 'interactionCreate',
     code: `
-        $if[$and[$isAutocomplete==false;$commandName==play];
+        $if[$commandName==play;
             $playTrack[$voiceID[$guildID;$authorID];$option[query]]
         ]
     `
