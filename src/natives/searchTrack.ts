@@ -34,6 +34,12 @@ export default new NativeFunction({
             requestedBy: ctx.user
         })
 
+        const connectOptions = ctx.getExtension(ForgeMusic).connectOptions ?? {}
+        const connectionOptionsUnion = {
+            metadata: { text: ctx.channel },
+            ...connectOptions
+        }
+
         let tracks = searchResult.tracks
         if (limit && tracks.length > limit) tracks = tracks.slice(0, limit);
 
@@ -55,7 +61,7 @@ export default new NativeFunction({
 
         if (addToPlayer && hasQueue(ctx)) useQueue(ctx.guild).addTrack(tracks);
         else if (addToPlayer && !hasQueue(ctx)) {
-            const queue = await ctx.client.getExtension(ForgeMusic).player.queues.create(ctx.guild)
+            const queue = await ctx.client.getExtension(ForgeMusic).player.queues.create(ctx.guild, connectionOptionsUnion)
             queue.addTrack(tracks)
         }
 

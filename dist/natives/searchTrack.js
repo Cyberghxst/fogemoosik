@@ -37,6 +37,12 @@ exports.default = new forgescript_1.NativeFunction({
             blockExtractors: blockedExtractors,
             requestedBy: ctx.user
         });
+        console.log(searchResult);
+        const connectOptions = ctx.getExtension(ForgeMusic_1.ForgeMusic).connectOptions ?? {};
+        const connectionOptionsUnion = {
+            metadata: { text: ctx.channel },
+            ...connectOptions
+        };
         let tracks = searchResult.tracks;
         if (limit && tracks.length > limit)
             tracks = tracks.slice(0, limit);
@@ -55,7 +61,7 @@ exports.default = new forgescript_1.NativeFunction({
         if (addToPlayer && (0, hasQueue_1.default)(ctx))
             (0, discord_player_1.useQueue)(ctx.guild).addTrack(tracks);
         else if (addToPlayer && !(0, hasQueue_1.default)(ctx)) {
-            const queue = await ctx.client.getExtension(ForgeMusic_1.ForgeMusic).player.queues.create(ctx.guild);
+            const queue = await ctx.client.getExtension(ForgeMusic_1.ForgeMusic).player.queues.create(ctx.guild, connectionOptionsUnion);
             queue.addTrack(tracks);
         }
         return this.success(searchResult.tracks.length > 0 ? formattedTracks.join(",") : "");
