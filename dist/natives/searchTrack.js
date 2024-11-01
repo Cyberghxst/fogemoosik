@@ -37,7 +37,6 @@ exports.default = new forgescript_1.NativeFunction({
             blockExtractors: blockedExtractors,
             requestedBy: ctx.user
         });
-        console.log(searchResult);
         const connectOptions = ctx.getExtension(ForgeMusic_1.ForgeMusic).connectOptions ?? {};
         const connectionOptionsUnion = {
             metadata: { text: ctx.channel },
