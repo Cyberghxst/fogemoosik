@@ -4,14 +4,14 @@ import { createContext, runInContext } from "node:vm"
 import { useQueue } from "discord-player"
 
 export default new NativeFunction({
-    name: "$queue",
-    description: "Returns queue songs resolving the given text placeholders.",
+    name: "$queueHistory",
+    description: "Returns queue history songs resolving the given text placeholders.",
     version: "1.0.0",
     brackets: false,
     unwrap: true,
     args: [
         Arg.optionalNumber("Start Index", "The queue song start index."),
-        Arg.optionalNumber("Limit", "The amount of queue songs to be retrieved."),
+        Arg.optionalNumber("Limit", "The amount of queue history songs to be retrieved."),
         Arg.optionalString("Text", "The text to be resolved."),
         Arg.optionalString("Separator", "The separator for each result.")
 
@@ -19,7 +19,7 @@ export default new NativeFunction({
     output: ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
         const queue = useQueue(ctx.guild)
-        const tracks = queue.tracks.toArray()
+        const tracks = queue.history.tracks.toArray()
 
         text ||= "{position} {track.title} | <@{track.requestedBy.username}>"
 
