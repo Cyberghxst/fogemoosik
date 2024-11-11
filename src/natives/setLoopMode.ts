@@ -7,11 +7,11 @@ export default new NativeFunction({
     description: "Set the loop mode of the music player.",
     brackets: true,
     unwrap: true,
-    args: [Arg.requiredEnum(QueueRepeatMode, "Mode", "The loop mode of the music player.")],
+    args: [Arg.requiredString("Mode", "The loop mode of the music player.")],
     execute(ctx, [mode]) {
         const player = useMainPlayer()
 
-        player.queues.get(ctx.guild).setRepeatMode(mode)
+        player.queues.get(ctx.guild).setRepeatMode(QueueRepeatMode[mode.toUpperCase()])
 
         return this.success()
     }
