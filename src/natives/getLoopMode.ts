@@ -10,6 +10,6 @@ export default new NativeFunction({
     execute(ctx) {
         const player = useMainPlayer()
         
-        return this.success(QueueRepeatMode[player.queues.get(ctx.guild).repeatMode])
+        return this.success(Object.keys(QueueRepeatMode)[player.queues.get(ctx.guild).repeatMode])
     }
 })

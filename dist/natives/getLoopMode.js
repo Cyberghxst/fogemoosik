@@ -10,6 +10,6 @@ exports.default = new forgescript_1.NativeFunction({
     output: discord_player_1.QueueRepeatMode,
     execute(ctx) {
         const player = (0, discord_player_1.useMainPlayer)();
-        return this.success(discord_player_1.QueueRepeatMode[player.queues.get(ctx.guild).repeatMode]);
+        return this.success(Object.keys(discord_player_1.QueueRepeatMode)[player.queues.get(ctx.guild).repeatMode]);
     }
 });
