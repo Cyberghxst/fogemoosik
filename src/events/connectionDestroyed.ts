@@ -9,7 +9,7 @@ export default new MusicEventHandler({
     async listener(queue) {
         const commands = this.getExtension(ForgeMusic).commands.get(GuildQueueEvent.ConnectionDestroyed)
         if (!commands) return;
-
+        
         for (const command of commands) {
             Interpreter.run({
                 obj: queue.metadata.text,
