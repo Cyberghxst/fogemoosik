@@ -10,7 +10,6 @@ exports.default = new forgescript_1.NativeFunction({
     name: "$leaveVoiceChannel",
     version: "1.0.0",
     description: "Destroys the current voice connection.",
-    brackets: false,
     unwrap: false,
     async execute(ctx) {
         if ((0, hasQueue_1.default)(ctx)) {
