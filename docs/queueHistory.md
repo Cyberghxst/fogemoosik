@@ -2,7 +2,7 @@
 Returns queue history songs resolving the given text placeholders.
 ## Usage
 ```
-$queueHistory[start index?,limit?,text?,separator?]
+$queueHistory[startIndex?;limit?;text?;separator?]
 ```
 ## Fields
 |    Name     |                    Description                     |  Type  | Required | Rest |

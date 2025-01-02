@@ -2,7 +2,7 @@
 Search for a track using the given query.
 ## Usage
 ```
-$searchTrack[query,text result,engine?,fallback engine?,limit?,add to player?,...block extractors?]
+$searchTrack[query;textResult;engine?;fallbackEngine?;limit?;addToPlayer?;...blockExtractors?]
 ```
 ## Fields
 |       Name       |                                    Description                                     |  Type   | Required | Rest |

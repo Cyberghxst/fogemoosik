@@ -2,7 +2,7 @@
 Play a track by query.
 ## Usage
 ```
-$playTrack[channel id,query,engine?,fallback engine?,...block extractors?]
+$playTrack[channelID;query;engine?;fallbackEngine?;...blockExtractors?]
 ```
 ## Fields
 |       Name       |                                    Description                                     |  Type   | Required | Rest |

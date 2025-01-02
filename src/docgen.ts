@@ -1,5 +1,5 @@
-import { generateMetadata, Logger } from "@tryforge/forgescript"
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs"
+import { generateMetadata, Logger } from "@tryforge/forgescript"
 import { handlerName } from "@managers/MusicCommandManager"
 import { AsciiTable3 } from "ascii-table3"
 import { join } from "path"
@@ -14,6 +14,14 @@ generateMetadata(
 )
 .then(() => Logger.info("Documentation generation done"))
 .catch((e) => Logger.error(e));
+
+function toCamelCase(text: string): string {
+    return text.split(' ').map(
+        (part, i) => i === 0 
+            ? part.toLowerCase()
+            : `${part[0].toUpperCase()}${part.slice(1)}`
+    ).join("")
+}
 
 /**
  * Generates markdown documentation for every function in the library.
@@ -33,7 +41,7 @@ function generateFunctionDocs() {
             `# ${func.name}`,
             func.description,
             '## Usage',
-            `\`\`\`\n${func.name}${!!func.args ? ('[' + `${func.args.map(t => `${t.rest ? '...' : ''}${t.name.toLowerCase()}${t.required ? '' : '?'}`)}` + ']') : ''}\n\`\`\``,
+            `\`\`\`\n${func.name}${!!func.args ? ('[' + `${func.args.map(t => `${t.rest ? '...' : ''}${toCamelCase(t.name)}${t.required ? '' : '?'}`).join(";")}` + ']') : ''}\n\`\`\``,
         ]
 
         if (func.args) {

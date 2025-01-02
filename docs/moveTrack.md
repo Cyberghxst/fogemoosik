@@ -2,7 +2,7 @@
 Moves the track to a new position.
 ## Usage
 ```
-$moveTrack[position,new position]
+$moveTrack[position;newPosition]
 ```
 ## Fields
 |     Name     |           Description           |  Type  | Required | Rest |

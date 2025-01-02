@@ -2,7 +2,7 @@
 Returns queue songs resolving the given text placeholders.
 ## Usage
 ```
-$queue[start index?,limit?,text?,separator?]
+$queue[startIndex?;limit?;text?;separator?]
 ```
 ## Fields
 |    Name     |                Description                 |  Type  | Required | Rest |
