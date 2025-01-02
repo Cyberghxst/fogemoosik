@@ -1,5 +1,7 @@
 import { generateMetadata, Logger } from "@tryforge/forgescript"
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs"
 import { handlerName } from "@managers/MusicCommandManager"
+import { AsciiTable3 } from "ascii-table3"
 import { join } from "path"
 
 generateMetadata(
@@ -12,3 +14,49 @@ generateMetadata(
 )
 .then(() => Logger.info("Documentation generation done"))
 .catch((e) => Logger.error(e));
+
+/**
+ * Generates markdown documentation for every function in the library.
+ */
+function generateFunctionDocs() {
+    const dataPath = join(process.cwd(), "metadata", "functions.json")
+    const data = JSON.parse(readFileSync(dataPath, "utf-8"))
+
+    if (!existsSync(join(process.cwd(), "docs"))) {
+        mkdirSync(join(process.cwd(), "docs"))
+    }
+
+    for (const func of data) {
+        Logger.info("Parsing", func.name)
+
+        let content = [
+            `# ${func.name}`,
+            func.description,
+            '## Usage',
+            `\`\`\`\n${func.name}${!!func.args ? ('[' + `${func.args.map(t => `${t.rest ? '...' : ''}${t.name.toLowerCase()}${t.required ? '' : '?'}`)}` + ']') : ''}\n\`\`\``,
+        ]
+
+        if (func.args) {
+            const args = func.args.map(f => [f.name, f.description, f.type, f.required ? 'Yes' : 'No', f.rest ? 'Yes' : 'No'])
+            console.log(['Name', 'Description', 'Type', 'Required', 'Rest'], ...args)
+
+            const table = new AsciiTable3()
+            .setStyle('github-markdown')
+            .addRowMatrix([['Name', 'Description', 'Type', 'Required', 'Rest'], ...args])
+
+            content.push('## Fields', table.toString())
+        }
+
+        if (func.output) {
+            content.push('## Output', `> ${func.output.join(', ')}`)
+        }
+
+        content.push(`View source on [GitHub](https://github.com/Cyberghxst/forgemusic/blob/dev/src/natives/${func.name.slice(1)}.ts)`)
+
+        writeFileSync(join(process.cwd(), "docs", `${func.name.slice(1)}.md`), content.join("\n"), "utf-8")
+    }
+
+    return true
+}
+
+generateFunctionDocs()

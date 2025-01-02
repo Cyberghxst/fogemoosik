@@ -1,6 +1,6 @@
 import { MusicEventHandler } from "@handlers/MusicEventHandler"
+import { Context, Interpreter } from "@tryforge/forgescript"
 import { ForgeMusic } from "@structures/ForgeMusic"
-import { Interpreter } from "@tryforge/forgescript"
 import { GuildQueueEvent } from "discord-player"
 
 export default new MusicEventHandler({
@@ -11,13 +11,18 @@ export default new MusicEventHandler({
         if (!commands) return;
 
         for (const command of commands) {
-            Interpreter.run({
+            const context = new Context({
                 obj: queue.metadata.text,
                 client: this,
                 command,
                 environment: { queue, track },
                 data: command.compiled.code
             })
+
+            await this.getExtension(ForgeMusic)
+            .player
+            .context
+            .provide(context, () => Interpreter.run(context))
         }
     }
 })

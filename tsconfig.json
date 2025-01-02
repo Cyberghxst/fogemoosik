@@ -9,7 +9,7 @@
         "esModuleInterop": true,
         "incremental": true,
         "module": "CommonJS",
-        "target": "ES2023",
+        "target": "ES2022",
         "paths": {
             "@utils/*": ["./src/utils/*"],
             "@handlers/*": ["./src/classes/handlers/*"],

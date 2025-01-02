@@ -23,6 +23,7 @@ declare const _default: NativeFunction<[import("@tryforge/forgescript").IArg<Arg
     readonly APPLE_MUSIC_SEARCH: "appleMusicSearch";
     readonly FILE: "file";
     readonly AUTO_SEARCH: "autoSearch";
+    readonly DISCORD_PLAYER_BLOB: "discordPlayerBlob";
 }>, import("@tryforge/forgescript").IArg<ArgType.Number, boolean, false, import("@tryforge/forgescript").EnumLike>, import("@tryforge/forgescript").IArg<ArgType.Boolean, boolean, false, import("@tryforge/forgescript").EnumLike>, {
     name: string;
     description: string;

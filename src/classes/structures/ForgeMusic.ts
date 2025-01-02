@@ -1,12 +1,8 @@
-import { EventManager, ForgeClient, ForgeExtension, Logger } from "@tryforge/forgescript"
 import { GuildNodeCreateOptions, GuildQueueEvent, Player, type PlayerInitOptions } from "discord-player"
+import { EventManager, ForgeClient, ForgeExtension, Logger } from "@tryforge/forgescript"
 import { MusicCommandManager, handlerName } from "@managers/MusicCommandManager"
+import { DefaultExtractors } from "@discord-player/extractor"
 import { GatewayIntentsString } from "discord.js"
-
-/**
- * Unexported type from `discord-player`.
- */
-declare const knownExtractorKeys: readonly ["SpotifyExtractor", "AppleMusicExtractor", "SoundCloudExtractor", "YouTubeExtractor", "VimeoExtractor", "ReverbnationExtractor", "AttachmentExtractor"];
 
 /**
  * Constructor options of the music extension.
@@ -22,9 +18,8 @@ interface ForgeMusicInitOptions extends PlayerInitOptions {
     events?: GuildQueueEvent[]
     /**
      * Predicate to load certain extractors.
-     * @returns {boolean | null}
      */
-    extractorsLoadFilter?: (ext: (typeof knownExtractorKeys)[number]) => boolean | null
+    extractorsLoadFilter?: typeof DefaultExtractors
 }
 
 /**
@@ -87,7 +82,7 @@ export class ForgeMusic extends ForgeExtension {
         }
 
         // Loading the extractors.
-        this.player.extractors.loadDefault(this.options?.extractorsLoadFilter)
+        this.player.extractors.loadMulti(this.options.extractorsLoadFilter)
         .then(() => Logger.info("Extractors loaded successfully!"))
         .catch((e) => Logger.error("Unable to load the extractors; with reason: " + e))
     }

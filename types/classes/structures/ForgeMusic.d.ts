@@ -1,10 +1,7 @@
-import { ForgeClient, ForgeExtension } from "@tryforge/forgescript";
 import { GuildNodeCreateOptions, GuildQueueEvent, Player, type PlayerInitOptions } from "discord-player";
+import { ForgeClient, ForgeExtension } from "@tryforge/forgescript";
 import { MusicCommandManager } from "../managers/MusicCommandManager";
-/**
- * Unexported type from `discord-player`.
- */
-declare const knownExtractorKeys: readonly ["SpotifyExtractor", "AppleMusicExtractor", "SoundCloudExtractor", "YouTubeExtractor", "VimeoExtractor", "ReverbnationExtractor", "AttachmentExtractor"];
+import { DefaultExtractors } from "@discord-player/extractor";
 /**
  * Constructor options of the music extension.
  */
@@ -19,9 +16,8 @@ interface ForgeMusicInitOptions extends PlayerInitOptions {
     events?: GuildQueueEvent[];
     /**
      * Predicate to load certain extractors.
-     * @returns {boolean | null}
      */
-    extractorsLoadFilter?: (ext: (typeof knownExtractorKeys)[number]) => boolean | null;
+    extractorsLoadFilter?: typeof DefaultExtractors;
 }
 /**
  * The entrypoint of the forge music system.

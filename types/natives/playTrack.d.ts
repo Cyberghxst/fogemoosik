@@ -31,6 +31,7 @@ declare const _default: NativeFunction<[{
     readonly APPLE_MUSIC_SEARCH: "appleMusicSearch";
     readonly FILE: "file";
     readonly AUTO_SEARCH: "autoSearch";
+    readonly DISCORD_PLAYER_BLOB: "discordPlayerBlob";
 }>, {
     name: string;
     description: string;

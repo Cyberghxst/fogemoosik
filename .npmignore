@@ -9,3 +9,4 @@ src/
 tsconfig.json
 pnpm-lock.yaml
 package-lock.json
+dist/docgen.js
