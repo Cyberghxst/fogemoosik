@@ -1,8 +1,8 @@
-import { GuildNodeCreateOptions, GuildQueueEvent, Player, type PlayerInitOptions } from "discord-player"
+import { type BaseExtractor, GuildNodeCreateOptions, GuildQueueEvent, Player, type PlayerInitOptions } from "discord-player"
 import { EventManager, ForgeClient, ForgeExtension, Logger } from "@tryforge/forgescript"
 import { MusicCommandManager, handlerName } from "@managers/MusicCommandManager"
-import { DefaultExtractors } from "@discord-player/extractor"
-import { GatewayIntentsString } from "discord.js"
+import { type GatewayIntentsString } from "discord.js"
+import { getVersion } from "@utils/getVersion"
 
 /**
  * Constructor options of the music extension.
@@ -19,7 +19,7 @@ interface ForgeMusicInitOptions extends PlayerInitOptions {
     /**
      * Predicate to load certain extractors.
      */
-    extractorsLoadFilter?: typeof DefaultExtractors
+    includeExtractors?: typeof BaseExtractor[]
 }
 
 /**
@@ -29,7 +29,7 @@ export class ForgeMusic extends ForgeExtension {
     /** Cock my beloved. <3 */
     public name = "ForgeMusic"
     public description = "A standard music library tailored for ForgeScript."
-    public version = "1.0.0"
+    public version = getVersion()
 
     /**
      * The entrypoint of the player application.
@@ -82,9 +82,11 @@ export class ForgeMusic extends ForgeExtension {
         }
 
         // Loading the extractors.
-        this.player.extractors.loadMulti(this.options.extractorsLoadFilter)
-        .then(() => Logger.info("Extractors loaded successfully!"))
-        .catch((e) => Logger.error("Unable to load the extractors; with reason: " + e))
+        if (this.options.includeExtractors) {
+            this.player.extractors.loadMulti(this.options.includeExtractors)
+            .then(() => Logger.info("Extractors loaded successfully!"))
+            .catch((e) => Logger.error("Unable to load the extractors; with reason: " + e))
+        }
     }
 
     /**

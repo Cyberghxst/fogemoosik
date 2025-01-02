@@ -200,6 +200,15 @@ The following, is a list of event with its accessible properties.
     - GuildQueueEvent.Error
     - GuildQueueEvent.PlayerError
 ## Tips
+### Default Extractors
+The base framework provides some base music sources you can use. You must load them like follows.
+```js
+const { DefaultExtractors } = require("@tryforge/forge.music");
+const music = new ForgeMusic({
+    // ...
+    includeExtractors: DefaultExtractors
+});
+```
 ### Adding Support for YouTube
 ForgeMusic by default provides support for streaming from YouTube, but the native method is not stable as intended.
 For this, you must omit the registration of the default **YouTube Extractor** by doing the following step.
@@ -209,7 +218,7 @@ npm install discord-player-youtubei
 ```
 then, do the following step.
 ```js
-const { ForgeMusic, GuildQueueEvent } = require("@tryforge/forge.music");
+const { DefaultExtractors, ForgeMusic, GuildQueueEvent } = require("@tryforge/forge.music");
 const { YoutubeiExtractor } = require("discord-player-youtubei");
 const music = new ForgeMusic({
     events: [
@@ -218,7 +227,7 @@ const music = new ForgeMusic({
         GuildQueueEvent.PlayerError,
         GuildQueueEvent.Error
     ],
-    extractorsLoadFilter: (extractor) => extractor !== "YouTubeExtractor"
+    includeExtractors: DefaultExtractors
 });
 ```
 With the previous step done, register the **YoutubeiExtractor** into the extension registry.

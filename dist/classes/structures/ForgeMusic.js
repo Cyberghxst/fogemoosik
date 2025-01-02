@@ -4,6 +4,7 @@ exports.ForgeMusic = void 0;
 const discord_player_1 = require("discord-player");
 const forgescript_1 = require("@tryforge/forgescript");
 const MusicCommandManager_1 = require("../managers/MusicCommandManager");
+const getVersion_1 = require("../../utils/getVersion");
 /**
  * The entrypoint of the forge music system.
  */
@@ -12,7 +13,7 @@ class ForgeMusic extends forgescript_1.ForgeExtension {
     /** Cock my beloved. <3 */
     name = "ForgeMusic";
     description = "A standard music library tailored for ForgeScript.";
-    version = "1.0.0";
+    version = (0, getVersion_1.getVersion)();
     /**
      * The entrypoint of the player application.
      */
@@ -59,9 +60,11 @@ class ForgeMusic extends forgescript_1.ForgeExtension {
             client.events.load(MusicCommandManager_1.handlerName, this.options.events);
         }
         // Loading the extractors.
-        this.player.extractors.loadMulti(this.options.extractorsLoadFilter)
-            .then(() => forgescript_1.Logger.info("Extractors loaded successfully!"))
-            .catch((e) => forgescript_1.Logger.error("Unable to load the extractors; with reason: " + e));
+        if (this.options.includeExtractors) {
+            this.player.extractors.loadMulti(this.options.includeExtractors)
+                .then(() => forgescript_1.Logger.info("Extractors loaded successfully!"))
+                .catch((e) => forgescript_1.Logger.error("Unable to load the extractors; with reason: " + e));
+        }
     }
     /**
      * Returns the events location.

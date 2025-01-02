@@ -9,7 +9,9 @@ const path_1 = require("path");
     .then(() => forgescript_1.Logger.info("Documentation generation done"))
     .catch((e) => forgescript_1.Logger.error(e));
 function toCamelCase(text) {
-    return text.split(' ').map((part, i) => i === 0 ? part.toLowerCase() : `${part[0].toUpperCase()}${part.slice(1)}`).join("");
+    return text.split(' ').map((part, i) => i === 0
+        ? part.toLowerCase()
+        : `${part[0].toUpperCase()}${part.slice(1)}`).join("");
 }
 /**
  * Generates markdown documentation for every function in the library.
