@@ -5,7 +5,8 @@ Play a track by query.
 $playTrack[channel id,query,engine?,fallback engine?,...block extractors?]
 ```
 ## Fields
-| Name             | Description                                                                        | Type    | Required | Rest |
+|       Name       |                                    Description                                     |  Type   | Required | Rest |
+|------------------|------------------------------------------------------------------------------------|---------|----------|------|
 | Channel ID       | Voice channel ID to play the track on.                                             | Channel | Yes      | No   |
 | Query            | Track name to be searched.                                                         | String  | Yes      | No   |
 | Engine           | The query search engine, can be extractor name to target an specific one. (custom) | String  | No       | No   |

@@ -5,7 +5,8 @@ Seeks a track.
 $seekTrack[duration]
 ```
 ## Fields
-| Name     | Description                  | Type | Required | Rest |
+|   Name   |         Description          | Type | Required | Rest |
+|----------|------------------------------|------|----------|------|
 | Duration | Seek duration to be applied. | Time | Yes      | No   |
 
 ## Output

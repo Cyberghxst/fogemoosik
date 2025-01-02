@@ -5,7 +5,8 @@ Returns information of the current track.
 $trackInfo[...properties]
 ```
 ## Fields
-| Name       | Description                         | Type   | Required | Rest |
+|    Name    |             Description             |  Type  | Required | Rest |
+|------------|-------------------------------------|--------|----------|------|
 | Properties | The track properties to be accesed. | String | Yes      | Yes  |
 
 ## Output

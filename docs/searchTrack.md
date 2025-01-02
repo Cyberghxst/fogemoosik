@@ -5,7 +5,8 @@ Search for a track using the given query.
 $searchTrack[query,text result,engine?,fallback engine?,limit?,add to player?,...block extractors?]
 ```
 ## Fields
-| Name             | Description                                                                        | Type    | Required | Rest |
+|       Name       |                                    Description                                     |  Type   | Required | Rest |
+|------------------|------------------------------------------------------------------------------------|---------|----------|------|
 | Query            | The query to search for.                                                           | String  | Yes      | No   |
 | Text Result      | The formatted text result to return.                                               | String  | Yes      | No   |
 | Engine           | The query search engine, can be extractor name to target an specific one. (custom) | String  | No       | No   |

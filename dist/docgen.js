@@ -18,6 +18,7 @@ function generateFunctionDocs() {
         (0, fs_1.mkdirSync)((0, path_1.join)(process.cwd(), "docs"));
     }
     for (const func of data) {
+        forgescript_1.Logger.info("Parsing", func.name);
         let content = [
             `# ${func.name}`,
             func.description,
@@ -26,10 +27,10 @@ function generateFunctionDocs() {
         ];
         if (func.args) {
             const args = func.args.map(f => [f.name, f.description, f.type, f.required ? 'Yes' : 'No', f.rest ? 'Yes' : 'No']);
-            console.log(['Name', 'Description', 'Type', 'Required', 'Rest'], ...args);
             const table = new ascii_table3_1.AsciiTable3()
                 .setStyle('github-markdown')
-                .addRowMatrix([['Name', 'Description', 'Type', 'Required', 'Rest'], ...args]);
+                .setHeading('Name', 'Description', 'Type', 'Required', 'Rest')
+                .addRowMatrix(args);
             content.push('## Fields', table.toString());
         }
         if (func.output) {

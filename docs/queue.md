@@ -5,7 +5,8 @@ Returns queue songs resolving the given text placeholders.
 $queue[start index?,limit?,text?,separator?]
 ```
 ## Fields
-| Name        | Description                                | Type   | Required | Rest |
+|    Name     |                Description                 |  Type  | Required | Rest |
+|-------------|--------------------------------------------|--------|----------|------|
 | Start Index | The queue song start index.                | Number | No       | No   |
 | Limit       | The amount of queue songs to be retrieved. | Number | No       | No   |
 | Text        | The text to be resolved.                   | String | No       | No   |

@@ -5,7 +5,8 @@ Removes the track that is located at the given position.
 $removeTrack[position]
 ```
 ## Fields
-| Name     | Description                       | Type   | Required | Rest |
+|   Name   |            Description            |  Type  | Required | Rest |
+|----------|-----------------------------------|--------|----------|------|
 | Position | The track position to be removed. | Number | Yes      | No   |
 
 ## Output

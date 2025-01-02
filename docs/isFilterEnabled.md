@@ -5,7 +5,8 @@ Check whether the provided filter is enabled.
 $isFilterEnabled[filters]
 ```
 ## Fields
-| Name    | Description                 | Type | Required | Rest |
+|  Name   |         Description         | Type | Required | Rest |
+|---------|-----------------------------|------|----------|------|
 | Filters | Filter names to be toggled. | Enum | Yes      | No   |
 
 ## Output

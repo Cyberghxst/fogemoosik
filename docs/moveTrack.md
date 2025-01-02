@@ -5,7 +5,8 @@ Moves the track to a new position.
 $moveTrack[position,new position]
 ```
 ## Fields
-| Name         | Description                     | Type   | Required | Rest |
+|     Name     |           Description           |  Type  | Required | Rest |
+|--------------|---------------------------------|--------|----------|------|
 | Position     | The track position to be moved. | Number | Yes      | No   |
 | New Position | The new position of the track.  | Number | Yes      | No   |
 
