@@ -1,4 +1,4 @@
-import { GuildQueueEvent, QueueRepeatMode } from "discord-player";
+import { GuildQueueEvent, QueueRepeatMode, QueryType } from "discord-player";
 import { DefaultExtractors } from "@discord-player/extractor";
 import { ForgeMusic } from "./classes/structures/ForgeMusic";
-export { DefaultExtractors, ForgeMusic, GuildQueueEvent, QueueRepeatMode };
+export { DefaultExtractors, ForgeMusic, GuildQueueEvent, QueueRepeatMode, QueryType };
