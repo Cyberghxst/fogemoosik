@@ -9,6 +9,6 @@ exports.default = new forgescript_1.NativeFunction({
     unwrap: false,
     output: forgescript_1.ArgType.Number,
     execute(ctx) {
-        return this.success((0, discord_player_1.useQueue)(ctx.guild).history.size);
+        return this.success((0, discord_player_1.useQueue)(ctx.guild).history.tracks.data.length);
     }
 });

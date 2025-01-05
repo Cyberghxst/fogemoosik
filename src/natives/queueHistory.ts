@@ -19,7 +19,7 @@ export default new NativeFunction({
     output: ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
         const queue = useQueue(ctx.guild)
-        const tracks = queue.history.tracks.toArray()
+        const tracks = queue.history.tracks.data
 
         text ||= "{position} {track.title} | <@{track.requestedBy.username}>"
 
