@@ -8,6 +8,6 @@ export default new NativeFunction({
     unwrap: false,
     output: ArgType.Number,
     execute(ctx) {
-        return this.success(useQueue().history.tracks.data.length)
+        return this.success(useQueue(ctx.guild).history.tracks.data.length)
     }
 })
