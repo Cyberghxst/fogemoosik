@@ -18,12 +18,12 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
-        const queue = useQueue(ctx.guild)
-        const tracks = queue.tracks.toArray()
+        const queue = useQueue()
+        const tracks = queue.tracks.data
 
         text ||= "{position} {track.title} | <@{track.requestedBy.username}>"
 
-        const results = tracks.slice(index ?? 0, limit ?? 10)
+        const results = tracks.slice(index ?? 0, limit ?? undefined)
         .map((_, i) => text.replace(/\{position\}/g, String(i + 1)))
         .map((song, i) => {
             const matches = song.match(PLACEHOLDER_PATTERN) ?? []

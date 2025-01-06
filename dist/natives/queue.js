@@ -18,10 +18,10 @@ exports.default = new forgescript_1.NativeFunction({
     ],
     output: forgescript_1.ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
-        const queue = (0, discord_player_1.useQueue)(ctx.guild);
-        const tracks = queue.tracks.toArray();
+        const queue = (0, discord_player_1.useQueue)();
+        const tracks = queue.tracks.data;
         text ||= "{position} {track.title} | <@{track.requestedBy.username}>";
-        const results = tracks.slice(index ?? 0, limit ?? 10)
+        const results = tracks.slice(index ?? 0, limit ?? undefined)
             .map((_, i) => text.replace(/\{position\}/g, String(i + 1)))
             .map((song, i) => {
             const matches = song.match(constants_1.PLACEHOLDER_PATTERN) ?? [];

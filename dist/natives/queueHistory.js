@@ -18,21 +18,30 @@ exports.default = new forgescript_1.NativeFunction({
     ],
     output: forgescript_1.ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
-        const queue = (0, discord_player_1.useQueue)(ctx.guild);
-        const tracks = queue.history.tracks.data;
-        text ||= "{position} {track.title} | <@{track.requestedBy.username}>";
-        const results = tracks.slice(index ?? 0, limit ?? 10)
-            .map((_, i) => text.replace(/\{position\}/g, String(i + 1)))
-            .map((song, i) => {
-            const matches = song.match(constants_1.PLACEHOLDER_PATTERN) ?? [];
-            const context = (0, node_vm_1.createContext)({ track: tracks[i] });
+        const queue = (0, discord_player_1.useQueue)();
+        let tracks = queue.history.tracks.data;
+        if (index)
+            tracks = tracks.slice(index, limit ?? undefined);
+        const resolvedTracks = [];
+        text ??= "{position} {track.title} | {track.requestedBy}";
+        let i = 0, advance = () => i++;
+        for (const track of tracks) {
+            let result = text.replace(/\{position\}/g, String(i + 1));
+            const matches = result.match(constants_1.PLACEHOLDER_PATTERN) ?? [];
+            if (matches.length === 0) {
+                resolvedTracks.push(result);
+                advance();
+                continue;
+            }
+            const context = (0, node_vm_1.createContext)({ track });
             for (const match of matches) {
                 const placeholderValue = match.slice(1, -1);
-                const result = (0, node_vm_1.runInContext)(placeholderValue, context);
-                song = song.replace(new RegExp(match, "g"), result);
+                const placeholderResult = (0, node_vm_1.runInContext)(placeholderValue, context);
+                result = result.replace(new RegExp(match, "g"), placeholderResult);
             }
-            return song;
-        });
-        return this.success(results.join(separator || ","));
+            resolvedTracks.push(result);
+            advance();
+        }
+        return this.success(resolvedTracks.join(separator ?? ","));
     }
 });

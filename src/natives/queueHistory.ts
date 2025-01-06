@@ -18,26 +18,37 @@ export default new NativeFunction({
     ],
     output: ArgType.String,
     async execute(ctx, [index, limit, text, separator]) {
-        const queue = useQueue(ctx.guild)
-        const tracks = queue.history.tracks.data
+        const queue = useQueue()
+        let tracks = queue.history.tracks.data
+        if (index) tracks = tracks.slice(index, limit ?? undefined);
 
-        text ||= "{position} {track.title} | <@{track.requestedBy.username}>"
+        const resolvedTracks: string[] = []
 
-        const results = tracks.slice(index ?? 0, limit ?? 10)
-        .map((_, i) => text.replace(/\{position\}/g, String(i + 1)))
-        .map((song, i) => {
-            const matches = song.match(PLACEHOLDER_PATTERN) ?? []
-            const context = createContext({ track: tracks[i] })
+        text ??= "{position} {track.title} | {track.requestedBy}"
 
-            for (const match of matches) {
-                const placeholderValue = match.slice(1, -1)
-                const result = runInContext(placeholderValue, context)
-                song = song.replace(new RegExp(match, "g"), result)
+        let i = 0, advance = () => i++
+        for (const track of tracks) {
+            let result = text.replace(/\{position\}/g, String(i + 1))
+
+            const matches = result.match(PLACEHOLDER_PATTERN) ?? []
+            if (matches.length === 0) {
+                resolvedTracks.push(result)
+                advance()
+                continue
             }
 
-            return song
-        })
+            const context = createContext({ track })
+            for (const match of matches) {
+                const placeholderValue = match.slice(1, -1)
+                const placeholderResult = runInContext(placeholderValue, context)
+
+                result = result.replace(new RegExp(match, "g"), placeholderResult)
+            }
+
+            resolvedTracks.push(result)
+            advance()
+        }
         
-        return this.success(results.join(separator || ","))
+        return this.success(resolvedTracks.join(separator ?? ","))
     }
 })
