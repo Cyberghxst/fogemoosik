@@ -14,6 +14,7 @@ export default new NativeFunction({
     args: [
         Arg.requiredString("Query", "The query to search for."),
         Arg.requiredString("Text Result", "The formatted text result to return."),
+        Arg.optionalString("Separator", "The result separator."),
         Arg.optionalString("Engine", "The query search engine, can be extractor name to target an specific one. (custom)"),
         Arg.optionalEnum(QueryType, "Fallback Engine", "Fallback search engine to use."),
         Arg.optionalNumber("Limit", "The maximum number of results to return."),
@@ -26,7 +27,7 @@ export default new NativeFunction({
             rest: true
         }
     ],
-    async execute(ctx, [query, text, engine, fallbackEngine, limit, addToPlayer, blockedExtractors]) {
+    async execute(ctx, [query, text, separator, engine, fallbackEngine, limit, addToPlayer, blockedExtractors]) {
         const searchResult = await ctx.client.getExtension(ForgeMusic).player.search(query, {
             searchEngine: engine as SearchQueryType | `ext:${string}`,
             fallbackSearchEngine: fallbackEngine,
@@ -65,6 +66,6 @@ export default new NativeFunction({
             queue.addTrack(tracks)
         }
 
-        return this.success(searchResult.tracks.length > 0 ? formattedTracks.join(",") : "")
+        return this.success(searchResult.tracks.length > 0 ? formattedTracks.join(separator ?? ",") : "")
     }
 })

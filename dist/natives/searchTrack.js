@@ -18,6 +18,7 @@ exports.default = new forgescript_1.NativeFunction({
     args: [
         forgescript_1.Arg.requiredString("Query", "The query to search for."),
         forgescript_1.Arg.requiredString("Text Result", "The formatted text result to return."),
+        forgescript_1.Arg.optionalString("Separator", "The result separator."),
         forgescript_1.Arg.optionalString("Engine", "The query search engine, can be extractor name to target an specific one. (custom)"),
         forgescript_1.Arg.optionalEnum(discord_player_1.QueryType, "Fallback Engine", "Fallback search engine to use."),
         forgescript_1.Arg.optionalNumber("Limit", "The maximum number of results to return."),
@@ -30,7 +31,7 @@ exports.default = new forgescript_1.NativeFunction({
             rest: true
         }
     ],
-    async execute(ctx, [query, text, engine, fallbackEngine, limit, addToPlayer, blockedExtractors]) {
+    async execute(ctx, [query, text, separator, engine, fallbackEngine, limit, addToPlayer, blockedExtractors]) {
         const searchResult = await ctx.client.getExtension(ForgeMusic_1.ForgeMusic).player.search(query, {
             searchEngine: engine,
             fallbackSearchEngine: fallbackEngine,
@@ -63,6 +64,6 @@ exports.default = new forgescript_1.NativeFunction({
             const queue = await ctx.client.getExtension(ForgeMusic_1.ForgeMusic).player.queues.create(ctx.guild, connectionOptionsUnion);
             queue.addTrack(tracks);
         }
-        return this.success(searchResult.tracks.length > 0 ? formattedTracks.join(",") : "");
+        return this.success(searchResult.tracks.length > 0 ? formattedTracks.join(separator ?? ",") : "");
     }
 });
